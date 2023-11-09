@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ТЕСТ</title>
+    <meta charset="utf-8" />
+    <style>
+
+
+      body {
+        
+        background: url(moon.png);
+       
+      }
+
+      fieldset {
+        column-count: 3;
+        column-gap: 60px;
+      }
+
+      .test {
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+
+      .question {
+        width: calc(60% - 10px);
+        margin-bottom: 30px;
+        padding: 11px;
+        background-color: #fff;
+        border-radius: 2px;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <fieldset>
+        <div class="test">
+        <form id="test-form">
+            <!-- Вопрос 1:  -->
+            <div class="question">
+                <h3>Вопрос 1</h3>
+                <p>Кто создал язык программирования Java?</p>
+                <label for="q1">
+                    <input type="text" name="q1" id="q1" placeholder="Введите ответ" required />
+                </label>
+                </div>
+            </div>
+
+            <!-- Вопрос 2 -->
+            <div class="question">
+                <h3>Вопрос 2</h3>
+                <p>Какой тег используется для вставки картинки?</p>
+                <label for="q2a">
+                    <input type="radio" name="q2" id="q2a" value="a" class="answer" />
+                    &lt;img&gt;
+                </label>
+                <label for="q2b">
+                    <input type="radio" name="q2" id="q2b" value="b" class="answer" />
+                    &lt;src&gt;
+                </label>
+                <label for="q2c">
+                    <input type="radio" name="q2" id="q2c" value="c" class="answer" />
+                    &lt;br&gt;
+                </label>
+                </div>
+            </div>
+            
+
+            <!-- Вопрос 3-->
+            <div class="question">
+                <h3>Вопрос 3</h3>
+                <p>Какие из перечисленных языков являются статически типизированными?</p>
+                <label for="q3a">
+                    <input type="checkbox" name="q3a" id="q3a" value="a" class="answer" />
+                    Java
+                </label>
+                <label for="q3b">
+                    <input type="checkbox" name="q3b" id="q3b" value="b" class="answer" />
+                    Python
+                </label>
+                <label for="q3c">
+                    <input type="checkbox" name="q3c" id="q3c" value="c" class="answer" />
+                    TypeScript
+                </label>
+                <label for="q3d">
+                    <input type="checkbox" name="q3d" id="q3d" value="d" class="answer" />
+                    C++
+                </label>
+            </div>
+        </div>
+        </div>
+        </div>
+
+        
+        <!-- Вопрос 4 -->
+        <div class="question">
+            <h3>Вопрос 4</h3>
+            <p>Какие единицы измерения могут использоваться для атрибута ширины</p>
+            <label for="q4">
+                <select name="q4" id="q4">
+                <option value="">Выберите ответ</option>
+                <option value="a">Пиксели и %</option>
+                <option value="b">Пиксели</option>
+                <option value="c">Сантиметры</option>
+                </select>
+            </label>
+        </div>
+        </div>
+
+        <!-- Вопрос 5 -->
+        <div class="question">
+            <h3>Вопрос 5</h3>
+            <p>На сколько процентов изучили HTML?</p>
+            <label for="q5">
+                <input type="range" name="q5" id="q5" min="0" max="100" step="5" value="50" class="answer" />
+                <output for="q5" id="q5-output">50</output>%
+            </label>
+        </div>
+        </div>
+
+        <!--Вопрос 6 -->
+        <div class="question">
+            <h3>Вопрос 6</h3>
+            <p>Какие факты вы знаете о языке программирования php?</p>
+            <label for="q6">
+                <textarea name="q6" id="q6" rows="4" cols="30" placeholder="Введите ответ"></textarea>
+            </label>
+            </div>
+        </fieldset>
+        </div>
+
+            <button type="submit">Проверить ответы</button>
+            </form>
+        </div>
+
+
+    <script>
+      const formTest = document.getElementById("test-form");
+
+      // ответы
+      const correctAnswers = {
+        q1: "James Gosling",
+        q2: "a",
+        q3: ["a", "c"],
+        q4: "a"
+      };
+
+      // проверка ответов
+      formTest.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        let score = 0;
+        const ansUsers = {
+          q1: formTest.q1.value,
+          q2: formTest.q2.value,
+          q3: [
+            formTest.q3a.checked,
+            formTest.q3b.checked,
+            formTest.q3c.checked,
+            formTest.q3d.checked
+          ],
+          q4: formTest.q4.value
+        };
+
+        
+        if (ansUsers.q1.toLowerCase() === correctAnswers.q1.toLowerCase()) {
+          score += 1;
+        }
+
+        if (ansUsers.q2 === correctAnswers.q2) {
+          score += 1;
+        }
+
+        if (ansUsers.q3[0] === true && ansUsers.q3[1] === false && ansUsers.q3[2] === true && ansUsers.q3[3] === false) {
+          score += 1;
+        }
+
+        if (ansUsers.q4 === correctAnswers.q4) {
+          score += 1;
+        }
+
+     
+        const resultsContainer = document.createElement("div");
+        resultsContainer.innerHTML = `
+          <font color="#fff"><h2>Результаты</h2></font>
+          <p><font color="#fff">Количество правильных ответов: ${score}</font></p>
+          <p><font color="#fff">Количество неправильных ответов: ${4 - score}</font></p>
+        `;
+        formTest.replaceWith(resultsContainer);
+      });
+
+     
+      const rangeSlider = document.getElementById("q5");
+      const rangeOutput = document.getElementById("q5-output");
+      rangeSlider.addEventListener("input", () => {
+        rangeOutput.innerHTML = rangeSlider.value;
+      });
+    </script>
+  </body>
+</html>
+
+
+
